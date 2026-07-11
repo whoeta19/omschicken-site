@@ -608,6 +608,17 @@ a.cp-phone:hover { color: var(--gold); }
   .reveal { opacity: 1; transform: none; }
 }
 </style>
+<!-- Yandex.Metrika -->
+<script>
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+m[i].l=1*new Date();
+for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
+ym(110593818,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/110593818" style="position:absolute;left:-9999px;" alt=""/></div></noscript>
+<!-- /Yandex.Metrika -->
 </head>
 <body>
 
@@ -1181,6 +1192,42 @@ form.addEventListener('submit', async (e) => {
     statusEl.textContent = 'Не удалось отправить. Позвоните нам или напишите в Telegram.';
   } finally {
     btn.disabled = false;
+  }
+});
+</script>
+
+<script>
+document.addEventListener('click', function(e) {
+  var t = e.target.closest('a,button');
+  if (!t) return;
+
+  // Выбор мессенджера
+  if (t.classList.contains('chooser-btn')) {
+    var ch = t.classList.contains('tg') ? 'chooser_telegram' : 'chooser_max';
+    ym(110593818, 'reachGoal', ch);
+  }
+  // Кнопки "Заказать" на карточках
+  if (t.classList.contains('p-btn')) {
+    ym(110593818, 'reachGoal', 'card_order');
+  }
+  // Получить прайс / любая data-chooser
+  if (t.dataset && t.dataset.chooser !== undefined) {
+    ym(110593818, 'reachGoal', 'get_price');
+  }
+  // Звонок
+  if (t.href && t.href.startsWith('tel:')) {
+    ym(110593818, 'reachGoal', 'call');
+  }
+  // Telegram канал
+  if (t.classList.contains('tg-btn')) {
+    ym(110593818, 'reachGoal', 'tg_channel');
+  }
+});
+
+// Отправка формы
+document.addEventListener('submit', function(e) {
+  if (e.target.id === 'contactForm') {
+    ym(110593818, 'reachGoal', 'form_submit');
   }
 });
 </script>
